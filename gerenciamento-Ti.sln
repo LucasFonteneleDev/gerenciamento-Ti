@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35828.75 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gerenciamento-Ti", "gerenciamento-Ti.csproj", "{B2DEF8E5-4058-4B2F-A6F1-DF1E98236F2C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2DEF8E5-4058-4B2F-A6F1-DF1E98236F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2DEF8E5-4058-4B2F-A6F1-DF1E98236F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2DEF8E5-4058-4B2F-A6F1-DF1E98236F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2DEF8E5-4058-4B2F-A6F1-DF1E98236F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B457E874-D0C5-4222-89F7-1AD0BBE67192}
+	EndGlobalSection
+EndGlobal
