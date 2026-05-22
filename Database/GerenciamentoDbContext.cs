@@ -10,6 +10,7 @@ namespace gerenciamento_Ti.Database
         }
 
         public DbSet<Funcionario> Funcionario { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Empresa> Empresa { get; set; }
         public DbSet<TipoEquipamento> TipoEquipamento { get; set; }
         public DbSet<Equipamento> Equipamento { get; set; }
