@@ -61,13 +61,14 @@ namespace gerenciamento_Ti.Controllers
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(25),
+                expires: DateTime.UtcNow.AddMinutes(60),
                 signingCredentials: creds
             );
 
             return Ok(new
             {
-                accessToken = new JwtSecurityTokenHandler().WriteToken(token)
+                accessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                expiresAt = token.ValidTo
             });
         }
     }
