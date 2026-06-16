@@ -1,11 +1,13 @@
 ﻿using gerenciamento_Ti.DTO;
 using gerenciamento_Ti.Entities;
 using gerenciamento_Ti.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gerenciamento_Ti.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class EquipamentoController : ControllerBase
     {
