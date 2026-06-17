@@ -22,9 +22,6 @@ namespace gerenciamento_Ti.Controllers
         {
             var tipoequipamento = await tipoequipamentoService.GetAllAsync();
 
-            if (tipoequipamento == null || tipoequipamento.Count == 0)
-                return NotFound();
-
             return Ok(tipoequipamento);
         }
 

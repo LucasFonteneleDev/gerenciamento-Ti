@@ -21,9 +21,6 @@ namespace gerenciamento_Ti.Controllers
         {
             var Usuario = await UsuarioService.GetAllAsync();
 
-            if (Usuario == null || Usuario.Count == 0)
-                return NotFound();
-
             return Ok(Usuario);
         }
 

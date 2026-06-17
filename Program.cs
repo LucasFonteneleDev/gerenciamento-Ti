@@ -57,7 +57,7 @@ builder.Services
 
                 ValidateLifetime = true,
 
-                ClockSkew = TimeSpan.FromMinutes(5)
+                ClockSkew = TimeSpan.Zero
             };
     });
 
@@ -106,7 +106,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.UseCors("AllowAll");
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();

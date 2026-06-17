@@ -26,14 +26,21 @@ namespace gerenciamento_Ti.Services.Implementation
             return Usuario;
         }
 
-        public async Task<Usuario> GetByEmail(string email)
+        public async Task<Usuario?> GetByEmail(string email)
         {
             var Usuario = await context.Usuario.Where(x => x.Email == email).FirstOrDefaultAsync();
 
-            if (Usuario == null)
-            {
-                throw new Exception("Nenhum usuario cadastrado");
-            }
+            //if (Usuario == null)
+            //{
+            //    throw new Exception("Nenhum usuario cadastrado");
+            //}
+
+            return Usuario;
+        }
+
+        public async Task<Usuario?> GetByNome(string nome)
+        {
+            var Usuario = await context.Usuario.Where(x => x.Nome == nome).FirstOrDefaultAsync();
 
             return Usuario;
         }

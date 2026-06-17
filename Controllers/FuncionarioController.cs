@@ -22,9 +22,6 @@ namespace gerenciamento_Ti.Controllers
         {
             var funcionario = await funcionarioService.GetAllAsync();
 
-            if (funcionario == null || funcionario.Count == 0)
-                return NotFound();
-
             return Ok(funcionario);
         }
 

@@ -22,9 +22,6 @@ namespace gerenciamento_Ti.Controllers
         {
             var equipamento = await equipamentoService.GetAllAsync();
 
-            if (equipamento == null || equipamento.Count == 0)
-                return NotFound();
-
             return Ok(equipamento);
         }
 

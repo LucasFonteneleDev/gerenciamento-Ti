@@ -26,12 +26,17 @@ namespace gerenciamento_Ti.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody]UsuarioDTO usuarioDTO)
+        public async Task<IActionResult> Login([FromBody]UsuarioLoginDTO usuarioDTO)
         {
-            var usuario = await _usuarioService.GetByEmail(usuarioDTO.Email);
+            var usuario = await _usuarioService.GetByEmail(usuarioDTO.Usuario);
 
             if (usuario == null)
-                return Unauthorized("Usuario não encontrado");
+            {
+                usuario = await _usuarioService.GetByNome(usuarioDTO.Usuario);
+
+                if(usuario == null)
+                    return Unauthorized("Usuário não encontrado");
+            }
 
             bool senhaValida = BCrypt.Net.BCrypt.Verify(
                 usuarioDTO.Senha,
@@ -61,14 +66,14 @@ namespace gerenciamento_Ti.Controllers
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(1),
+                expires: DateTime.UtcNow.AddMinutes(30),
                 signingCredentials: creds
             );
 
             return Ok(new
             {
-                accessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                expiresAt = token.ValidTo
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                ExpiresAt = token.ValidTo
             });
         }
     }

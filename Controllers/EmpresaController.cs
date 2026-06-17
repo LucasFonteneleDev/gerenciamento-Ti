@@ -21,9 +21,6 @@ namespace gerenciamento_Ti.Controllers
         {
             var Empresa = await EmpresaService.GetAllAsync();
 
-            if (Empresa == null || Empresa.Count == 0)
-                return NotFound();
-
             return Ok(Empresa);
         }
 
