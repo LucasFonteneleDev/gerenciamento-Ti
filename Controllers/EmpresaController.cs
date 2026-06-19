@@ -34,6 +34,12 @@ namespace gerenciamento_Ti.Controllers
                 if (Empresa == null)
                     return NotFound();
 
+                //TODO: NO DTO ADICIONAR O DTO DE FUNCIONÁRIO RESPONSÁVEL
+                //tratar isso na listagem do front
+                //transformar isso em padrão para todas as telas
+
+
+
                 return Ok(Empresa);
             }
             catch (Exception ex)
