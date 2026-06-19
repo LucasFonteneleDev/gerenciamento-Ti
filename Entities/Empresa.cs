@@ -11,7 +11,6 @@ namespace gerenciamento_Ti.Entities
         public string CNPJ { get; set; }
         public int FuncionarioId { get; set; }
 
-        [JsonIgnore]
         public Funcionario Funcionario { get; set; }
 
         [JsonIgnore]

@@ -16,7 +16,9 @@ namespace gerenciamento_Ti.Services.Implementation
 
         public async Task<Empresa> GetById(int id)
         {
-            var Empresa = await context.Empresa.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var Empresa = await context.Empresa
+                .Include(x=>x.Funcionario)
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
 
             if (Empresa == null)
             {
