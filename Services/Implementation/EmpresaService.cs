@@ -22,7 +22,7 @@ namespace gerenciamento_Ti.Services.Implementation
 
             if (Empresa == null)
             {
-                throw new Exception("Nenhuma empresa com esta ID");
+                throw new Exception("Nenhuma empresa com esta ID");//todo: corrigir tratamento de exceções / ta tudo errado
             }
 
             return Empresa;
