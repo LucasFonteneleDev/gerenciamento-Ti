@@ -16,7 +16,10 @@ namespace gerenciamento_Ti.Services.Implementation
 
         public async Task<Equipamento> GetById(int id)
         {
-            var Equipamento = await context.Equipamento.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var Equipamento = await context.Equipamento
+                .Include(x => x.Empresa)
+                .Include(x => x.TipoEquipamento)
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
 
             if (Equipamento == null)
             {
@@ -28,7 +31,10 @@ namespace gerenciamento_Ti.Services.Implementation
 
         public async Task<List<Equipamento>> GetAllAsync()
         {
-            return await context.Equipamento.ToListAsync();
+            return await context.Equipamento
+                .Include(x => x.Empresa)
+                .Include(x => x.TipoEquipamento)
+                .ToListAsync();
         }
 
         public async Task<int> CreateAsync(EquipamentoDTO EquipamentoDTO)

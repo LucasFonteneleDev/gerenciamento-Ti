@@ -2,6 +2,7 @@
 using gerenciamento_Ti.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using gerenciamento_Ti.Util;
 
 namespace gerenciamento_Ti.Controllers
 {
@@ -19,9 +20,17 @@ namespace gerenciamento_Ti.Controllers
         [HttpGet("listagem")]
         public async Task<IActionResult> GetList()
         {
-            var Empresa = await EmpresaService.GetAllAsync();
+            var Empresas = await EmpresaService.GetAllAsync();
 
-            return Ok(Empresa);
+            List<EmpresaDTOGet> empresasDTOget = new List<EmpresaDTOGet>();
+            foreach (var Empresa in Empresas)
+            {
+                empresasDTOget.Add(
+                        UDTOEmpresaGet.AplicarValores(Empresa)
+                    );
+            }
+
+            return Ok(empresasDTOget);
         }
 
         [HttpGet("{id}")]
@@ -34,13 +43,9 @@ namespace gerenciamento_Ti.Controllers
                 if (Empresa == null)
                     return NotFound();
 
-                //TODO: NO DTO ADICIONAR O DTO DE FUNCIONÁRIO RESPONSÁVEL
-                //tratar isso na listagem do front
-                //transformar isso em padrão para todas as telas
+                EmpresaDTOGet empresaDTO = UDTOEmpresaGet.AplicarValores(Empresa);
 
-
-
-                return Ok(Empresa);
+                return Ok(empresaDTO);
             }
             catch (Exception ex)
             {

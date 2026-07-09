@@ -12,10 +12,8 @@ namespace gerenciamento_Ti.Entities
         public int EmpresaId { get; set; }
         public int? FuncionarioId { get; set; }
 
-        [JsonIgnore]
         public virtual Empresa Empresa { get; set; }
 
-        [JsonIgnore]
         public virtual TipoEquipamento TipoEquipamento { get; set; }
     }
 }

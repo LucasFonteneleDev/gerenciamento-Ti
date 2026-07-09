@@ -22,7 +22,7 @@ namespace gerenciamento_Ti.Services.Implementation
 
             if (Empresa == null)
             {
-                throw new Exception("Nenhuma empresa com esta ID");//todo: corrigir tratamento de exceções / ta tudo errado
+                throw new Exception("Nenhuma empresa com esta ID");
             }
 
             return Empresa;
@@ -30,7 +30,9 @@ namespace gerenciamento_Ti.Services.Implementation
 
         public async Task<List<Empresa>> GetAllAsync()
         {
-            return await context.Empresa.ToListAsync();
+            return await context.Empresa
+                .Include(x => x.Funcionario)
+                .ToListAsync();
         }
 
         public async Task<int> CreateAsync(EmpresaDTO EmpresaDTO)
@@ -44,6 +46,7 @@ namespace gerenciamento_Ti.Services.Implementation
 
             context.Empresa.Add(Empresa);
             await context.SaveChangesAsync();
+            //todo:Evitar que erros no banco de dados estão estourem na API
 
             return Empresa.Id;
         }
