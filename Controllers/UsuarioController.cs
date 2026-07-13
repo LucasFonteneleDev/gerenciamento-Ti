@@ -1,5 +1,7 @@
 ﻿using gerenciamento_Ti.DTO;
+using gerenciamento_Ti.Entities;
 using gerenciamento_Ti.Services.Interface;
+using gerenciamento_Ti.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +21,17 @@ namespace gerenciamento_Ti.Controllers
         [HttpGet("listagem")]
         public async Task<IActionResult> GetList()
         {
-            var Usuario = await UsuarioService.GetAllAsync();
+            var Usuarios = await UsuarioService.GetAllAsync();
 
-            return Ok(Usuario);
+            List<UsuarioDTOGet> usuariosDTOget = new List<UsuarioDTOGet>();
+            foreach (var Usuario in Usuarios)
+            {
+                usuariosDTOget.Add(
+                        UDTOUsuarioGet.AplicarValores(Usuario)
+                    );
+            }
+
+            return Ok(usuariosDTOget);
         }
 
         [HttpGet("{id}")]
@@ -34,7 +44,9 @@ namespace gerenciamento_Ti.Controllers
                 if (Usuario == null)
                     return NotFound();
 
-                return Ok(Usuario);
+                UsuarioDTOGet usuarioDTOGet = UDTOUsuarioGet.AplicarValores(Usuario);
+
+                return Ok(usuarioDTOGet);
             }
             catch (Exception ex)
             {
