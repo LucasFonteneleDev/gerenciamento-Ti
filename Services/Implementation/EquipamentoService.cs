@@ -19,6 +19,7 @@ namespace gerenciamento_Ti.Services.Implementation
             var Equipamento = await context.Equipamento
                 .Include(x => x.Empresa)
                 .Include(x => x.TipoEquipamento)
+                .Include(x => x.Funcionario)
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
 
             if (Equipamento == null)
@@ -34,6 +35,7 @@ namespace gerenciamento_Ti.Services.Implementation
             return await context.Equipamento
                 .Include(x => x.Empresa)
                 .Include(x => x.TipoEquipamento)
+                .Include(x => x.Funcionario)
                 .ToListAsync();
         }
 
@@ -41,9 +43,9 @@ namespace gerenciamento_Ti.Services.Implementation
         {
             var Equipamento = new Equipamento
             {
-                TipoEquipamentoId = EquipamentoDTO.TipoEquipamentoId ,
-                Numero_Serie = EquipamentoDTO.Numero_Serie ,
-                EmpresaId = EquipamentoDTO.EmpresaId ,
+                TipoEquipamentoId = EquipamentoDTO.TipoEquipamentoId,
+                Numero_Serie = EquipamentoDTO.Numero_Serie,
+                EmpresaId = EquipamentoDTO.EmpresaId,
                 FuncionarioId = EquipamentoDTO.FuncionarioId
             };
 

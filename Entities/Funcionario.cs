@@ -16,5 +16,7 @@ namespace gerenciamento_Ti.Entities
 
         [JsonIgnore]
         public virtual List<Empresa> Empresas { get; set; } = new List<Empresa>();
+        [JsonIgnore]
+        public virtual List<Equipamento> Equipamentos { get; set; } = new List<Equipamento>();
     }
 }

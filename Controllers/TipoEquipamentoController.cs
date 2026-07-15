@@ -50,8 +50,6 @@ namespace gerenciamento_Ti.Controllers
                 return BadRequest();
             else if (string.IsNullOrWhiteSpace(tipoequipamentoDTO.Descricao))
                 return BadRequest();
-            else if (string.IsNullOrEmpty(tipoequipamentoDTO.Observacao))
-                return BadRequest();
 
             var id = await tipoequipamentoService.CreateAsync(tipoequipamentoDTO);
 
@@ -64,9 +62,7 @@ namespace gerenciamento_Ti.Controllers
             if (tipoequipamentoDTO == null)
                 return BadRequest();
             else if (string.IsNullOrWhiteSpace(tipoequipamentoDTO.Descricao))
-                return BadRequest();
-            else if (string.IsNullOrEmpty(tipoequipamentoDTO.Observacao))
-                return BadRequest();
+                return BadRequest();//todo: centralizar validações em função
 
             var _id = await tipoequipamentoService.UpdateAsync(id, tipoequipamentoDTO);
 

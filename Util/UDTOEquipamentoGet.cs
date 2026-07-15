@@ -17,7 +17,7 @@ namespace gerenciamento_Ti.Util
             equipamentosGET.EmpresaId = Equipamento.EmpresaId;
             equipamentosGET.EmpresaIdNome_Loja = Equipamento.Empresa.Nome_Loja;
             equipamentosGET.FuncionarioId = Equipamento.FuncionarioId;
-            //todo: funcionário ID. Verificar estrutura de tabelas e corrigir referencia
+            equipamentosGET.FuncionarioIdNome = Equipamento.Funcionario == null ? "" : Equipamento.Funcionario.Nome;
 
             return equipamentosGET;
         }
