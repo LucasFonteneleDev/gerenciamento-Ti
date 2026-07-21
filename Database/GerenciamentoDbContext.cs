@@ -14,5 +14,8 @@ namespace gerenciamento_Ti.Database
         public DbSet<Empresa> Empresa { get; set; }
         public DbSet<TipoEquipamento> TipoEquipamento { get; set; }
         public DbSet<Equipamento> Equipamento { get; set; }
+        public DbSet<Chamado> Chamado { get; set; }
+        public DbSet<UsuarioChamado> UsuarioChamado { get; set; }
+        public DbSet<MensagemChamado> MensagemChamado { get; set; }
     }
 }

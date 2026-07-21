@@ -1,4 +1,6 @@
-﻿namespace gerenciamento_Ti.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace gerenciamento_Ti.Entities
 {
     public class Usuario
     {
@@ -7,5 +9,8 @@
         public string Email { get; set; }
         public string SenhaHash { get; set; }
 
+        [JsonIgnore]
+        public List<UsuarioChamado> UsuarioChamado { get; set; }
+        public List<MensagemChamado> MensagemChamado { get; set; }
     }
 }

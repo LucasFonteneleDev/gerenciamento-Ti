@@ -94,6 +94,7 @@ builder.Services.AddScoped<IFuncionarioService, FuncionarioService>();
 builder.Services.AddScoped<IEmpresaService, EmpresaService>();
 builder.Services.AddScoped<ITipoEquipamentoService, TipoEquipamentoService>();
 builder.Services.AddScoped<IEquipamentoService, EquipamentoService>();
+builder.Services.AddScoped<IChamadoService, ChamadoService>();
 
 var app = builder.Build();
 
