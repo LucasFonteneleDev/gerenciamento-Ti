@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using gerenciamento_Ti.Database;
@@ -11,9 +12,11 @@ using gerenciamento_Ti.Database;
 namespace gerenciamento_Ti.Migrations
 {
     [DbContext(typeof(GerenciamentoDbContext))]
-    partial class GerenciamentoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260722191107_ChamadosRequisitanteInicial")]
+    partial class ChamadosRequisitanteInicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -11,6 +11,9 @@ namespace gerenciamento_Ti.Entities
 
         [JsonIgnore]
         public List<UsuarioChamado> UsuarioChamado { get; set; }
+        [JsonIgnore]
         public List<MensagemChamado> MensagemChamado { get; set; }
+        [JsonIgnore]
+        public List<Chamado> Chamado { get; set; }
     }
 }

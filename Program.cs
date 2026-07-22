@@ -95,14 +95,18 @@ builder.Services.AddScoped<IEmpresaService, EmpresaService>();
 builder.Services.AddScoped<ITipoEquipamentoService, TipoEquipamentoService>();
 builder.Services.AddScoped<IEquipamentoService, EquipamentoService>();
 builder.Services.AddScoped<IChamadoService, ChamadoService>();
+builder.Services.AddScoped<IUsuarioChamadoService, UsuarioChamadoService>();
+builder.Services.AddScoped<IMensagemChamadoService, MensagemChamadoService>();
 
 var app = builder.Build();
 
+#if RELEASE
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<GerenciamentoDbContext>();
     db.Database.Migrate();
 }
+#endif
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

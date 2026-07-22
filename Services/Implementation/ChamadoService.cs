@@ -16,7 +16,9 @@ namespace gerenciamento_Ti.Services.Implementation
 
         public async Task<Chamado> GetById(int id)
         {
-            var Chamado = await context.Chamado.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var Chamado = await context.Chamado.Where(x => x.Id == id)
+                .Include(x=> x.Usuario)
+                .FirstOrDefaultAsync();
 
             if (Chamado == null)
             {
@@ -28,7 +30,9 @@ namespace gerenciamento_Ti.Services.Implementation
 
         public async Task<List<Chamado>> GetAllAsync()
         {
-            return await context.Chamado.ToListAsync();
+            return await context.Chamado
+                .Include(x => x.Usuario)
+                .ToListAsync();
         }
 
         public async Task<int> CreateAsync(ChamadoDTO ChamadoDTO)
@@ -37,7 +41,8 @@ namespace gerenciamento_Ti.Services.Implementation
             {
                 Solucao = ChamadoDTO.Solucao,
                 Inicio = ChamadoDTO.Inicio,
-                Fim = ChamadoDTO.Fim
+                Fim = ChamadoDTO.Fim,
+                UsuarioId = ChamadoDTO.RequisitanteIncialId
             };
 
             context.Chamado.Add(Chamado);
@@ -56,6 +61,7 @@ namespace gerenciamento_Ti.Services.Implementation
             Chamado.Solucao = ChamadoDTO.Solucao;
             Chamado.Inicio = ChamadoDTO.Inicio;
             Chamado.Fim = ChamadoDTO.Fim;
+            Chamado.UsuarioId = ChamadoDTO.RequisitanteIncialId;
 
             await context.SaveChangesAsync();
             return Chamado.Id;
