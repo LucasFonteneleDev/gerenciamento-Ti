@@ -14,7 +14,8 @@ namespace gerenciamento_Ti.Util
             empresasGET.Inicio = Chamado.Inicio;
             empresasGET.Fim = Chamado.Fim;
             empresasGET.RequisitanteInicialId = Chamado.UsuarioId;
-            empresasGET.RequisitanteIncialNome = Chamado.Usuario.Nome;
+            empresasGET.RequisitanteInicialNome = Chamado.Usuario.Nome;
+            empresasGET.Assunto = Chamado.Assunto;
 
             return empresasGET;
         }

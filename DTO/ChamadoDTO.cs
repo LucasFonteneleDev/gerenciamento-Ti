@@ -6,6 +6,7 @@
         public DateTime Inicio { get; set; }
         public DateTime? Fim { get; set; }
         public int RequisitanteIncialId { get; set; }
+        public string Assunto { get; set; }
     }
 
     public class ChamadoDTOGet
@@ -15,6 +16,7 @@
         public DateTime Inicio { get; set; }
         public DateTime? Fim { get; set; }
         public int RequisitanteInicialId { get; set; }
-        public string RequisitanteIncialNome { get; set; }
+        public string RequisitanteInicialNome { get; set; }
+        public string Assunto { get; set; }
     }
 }

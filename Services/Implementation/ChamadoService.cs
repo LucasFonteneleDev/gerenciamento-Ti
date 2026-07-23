@@ -42,7 +42,8 @@ namespace gerenciamento_Ti.Services.Implementation
                 Solucao = ChamadoDTO.Solucao,
                 Inicio = ChamadoDTO.Inicio,
                 Fim = ChamadoDTO.Fim,
-                UsuarioId = ChamadoDTO.RequisitanteIncialId
+                UsuarioId = ChamadoDTO.RequisitanteIncialId,
+                Assunto = ChamadoDTO.Assunto
             };
 
             context.Chamado.Add(Chamado);
@@ -62,6 +63,7 @@ namespace gerenciamento_Ti.Services.Implementation
             Chamado.Inicio = ChamadoDTO.Inicio;
             Chamado.Fim = ChamadoDTO.Fim;
             Chamado.UsuarioId = ChamadoDTO.RequisitanteIncialId;
+            Chamado.Assunto = ChamadoDTO.Assunto;
 
             await context.SaveChangesAsync();
             return Chamado.Id;

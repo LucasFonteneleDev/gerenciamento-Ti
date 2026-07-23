@@ -11,6 +11,7 @@ namespace gerenciamento_Ti.Entities
         public DateTime Inicio { get; set; }
         public DateTime? Fim { get; set; }
         public int UsuarioId { get; set; }
+        public string Assunto { get; set; }
 
         [JsonIgnore]
         public List<UsuarioChamado> UsuarioChamado { get; set; }
