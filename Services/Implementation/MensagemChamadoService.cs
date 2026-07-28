@@ -33,6 +33,13 @@ namespace gerenciamento_Ti.Services.Implementation
                 .ToListAsync();
         }
 
+        public async Task<List<MensagemChamado>> GetAllFromChamadoAsync(int id_Chamado)
+        {
+            return await context.MensagemChamado
+                .Where(x => x.ChamadoId == id_Chamado)
+                .ToListAsync();
+        }
+
         public async Task<int> CreateAsync(MensagemChamadoDTO MensagemChamadoDTO)
         {
             var MensagemChamado = new MensagemChamado

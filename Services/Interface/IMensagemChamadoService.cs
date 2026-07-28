@@ -7,6 +7,7 @@ namespace gerenciamento_Ti.Services.Interface
     {
         public Task<MensagemChamado> GetById(int id);
         public Task<List<MensagemChamado>> GetAllAsync();
+        public Task<List<MensagemChamado>> GetAllFromChamadoAsync(int id_Chamado);
         public Task<int> CreateAsync(MensagemChamadoDTO usuarioChamadoDTO);
         public Task<int> UpdateAsync(int id, MensagemChamadoDTO usuarioChamadoDTO);
         public Task<bool> DeleteAsync(int id);

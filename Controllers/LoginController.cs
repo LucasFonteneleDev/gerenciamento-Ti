@@ -50,6 +50,7 @@ namespace gerenciamento_Ti.Controllers
             {
                 new Claim(JwtRegisteredClaimNames.Sub, usuario.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, usuario.Email),
+                //todo: criar cadastro de nível de acesso
                 //new Claim(ClaimTypes.Role, usuario.Role) //Permissão ou referencia de nível de acesso
             };
 

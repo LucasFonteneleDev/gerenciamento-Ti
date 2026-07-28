@@ -34,6 +34,22 @@ namespace gerenciamento_Ti.Controllers
             return Ok(mensagemChamadosDTOget);
         }
 
+        [HttpGet("listagem/{id_Chamado}")]
+        public async Task<IActionResult> GetListByChamado(int id_Chamado)
+        {
+            var MensagemChamados = await mensagemChamadoService.GetAllFromChamadoAsync(id_Chamado);
+
+            List<MensagemChamadoDTOGet> mensagemChamadosDTOget = new List<MensagemChamadoDTOGet>();
+            foreach (var MensagemChamado in MensagemChamados)
+            {
+                mensagemChamadosDTOget.Add(
+                        UDTOMensagemChamadoGet.AplicarValores(MensagemChamado)
+                    );
+            }
+
+            return Ok(mensagemChamadosDTOget);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
