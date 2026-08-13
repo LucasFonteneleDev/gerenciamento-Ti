@@ -40,41 +40,31 @@ namespace gerenciamento_Ti.Services.Implementation
                 .ToListAsync();
         }
 
-        public async Task<int> CreateAsync(MensagemChamadoDTO MensagemChamadoDTO)
+        public async Task<int> CreateAsync(MensagemChamado MensagemChamado)
         {
-            var MensagemChamado = new MensagemChamado
-            {
-                ChamadoId = MensagemChamadoDTO.ChamadoId,
-                UsuarioChamadoId = MensagemChamadoDTO.UsuarioChamadoId,
-                Texto = MensagemChamadoDTO.Texto,
-                Envio = MensagemChamadoDTO.Envio,
-                Enviado = MensagemChamadoDTO.Enviado,
-                ConfirmaRecebido = MensagemChamadoDTO.ConfirmaRecebido
-            };
-
             context.MensagemChamado.Add(MensagemChamado);
             await context.SaveChangesAsync();
 
             return MensagemChamado.Id;
         }
 
-        public async Task<int> UpdateAsync(int id, MensagemChamadoDTO MensagemChamadoDTO)
-        {
-            var mensagemChamado = await GetById(id);
+        //public async Task<int> UpdateAsync(int id, MensagemChamadoDTO MensagemChamadoDTO)
+        //{
+        //    var mensagemChamado = await GetById(id);
 
-            if (mensagemChamado == null)
-                throw new Exception("Esta Mensagem do Chamado não foi encontrada.");
+        //    if (mensagemChamado == null)
+        //        throw new Exception("Esta Mensagem do Chamado não foi encontrada.");
 
-            mensagemChamado.ChamadoId = MensagemChamadoDTO.ChamadoId;
-            mensagemChamado.UsuarioChamadoId = MensagemChamadoDTO.UsuarioChamadoId;
-            mensagemChamado.Texto = MensagemChamadoDTO.Texto;
-            mensagemChamado.Envio = MensagemChamadoDTO.Envio;
-            mensagemChamado.Enviado = MensagemChamadoDTO.Enviado;
-            mensagemChamado.ConfirmaRecebido = MensagemChamadoDTO.ConfirmaRecebido;
+        //    mensagemChamado.ChamadoId = MensagemChamadoDTO.ChamadoId;
+        //    mensagemChamado.UsuarioChamadoId = MensagemChamadoDTO.UsuarioChamadoId;
+        //    mensagemChamado.Texto = MensagemChamadoDTO.Texto;
+        //    mensagemChamado.Envio = MensagemChamadoDTO.Envio;
+        //    mensagemChamado.Enviado = MensagemChamadoDTO.Enviado;
+        //    mensagemChamado.ConfirmaRecebido = MensagemChamadoDTO.ConfirmaRecebido;
 
-            await context.SaveChangesAsync();
-            return mensagemChamado.Id;
-        }
+        //    await context.SaveChangesAsync();
+        //    return mensagemChamado.Id;
+        //}
 
         public async Task<bool> DeleteAsync(int id)
         {

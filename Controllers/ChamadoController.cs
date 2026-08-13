@@ -4,6 +4,7 @@ using gerenciamento_Ti.Services.Interface;
 using gerenciamento_Ti.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace gerenciamento_Ti.Controllers
 {
@@ -13,9 +14,12 @@ namespace gerenciamento_Ti.Controllers
     public class ChamadoController : ControllerBase
     {
         private readonly IChamadoService chamadoService;
-        public ChamadoController(IChamadoService _chamadoService)
+        private readonly IUsuarioChamadoService usuarioChamadoService;
+        public ChamadoController(IChamadoService _chamadoService,
+                                 IUsuarioChamadoService _usuarioChamadoService)
         {
             chamadoService = _chamadoService;
+            usuarioChamadoService = _usuarioChamadoService;
         }
 
         [HttpGet("listagem")]
@@ -57,14 +61,36 @@ namespace gerenciamento_Ti.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ChamadoDTO chamadoDTO)
         {
+            //validação do chamado
             if (chamadoDTO == null)
                 return BadRequest();
             else if (chamadoDTO.Inicio == null)
                 return BadRequest();
 
-            var id = await chamadoService.CreateAsync(chamadoDTO);
+            //construindo objeto de CHAMADO
+            var chamado = new Chamado();
+            chamado.Assunto = chamadoDTO.Assunto;
+            chamado.Inicio = chamadoDTO.Inicio;
+            chamado.Fim = chamadoDTO.Fim;
+            chamado.Solucao = chamadoDTO.Solucao;
 
-            return Ok(id);
+            //recuperando id do usuário do token
+            var usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            chamado.UsuarioId = int.Parse(usuarioId!);
+
+            var idchamado = await chamadoService.CreateAsync(chamado);
+
+            //criando usuário do chamado
+            var usuarioChamado = new UsuarioChamadoDTO();
+            usuarioChamado.ChamadoId = idchamado;
+            usuarioChamado.UsuarioId = chamado.UsuarioId;
+            usuarioChamado.Tipo = Enum.TipoUsuarioChamado.Requisitante;
+
+            //não é necessário repassar a id de usuario_chamado pois será deduzido do token
+            await usuarioChamadoService.CreateAsync(usuarioChamado);
+
+            return Ok(idchamado);
         }
 
         [HttpPut("{id}")]
@@ -75,7 +101,13 @@ namespace gerenciamento_Ti.Controllers
             else if (chamadoDTO.Inicio == null)
                 return BadRequest();
 
-            var _id = await chamadoService.UpdateAsync(id, chamadoDTO);
+            var chamado = new Chamado();
+            chamado.Assunto = chamadoDTO.Assunto;
+            chamado.Inicio = chamadoDTO.Inicio;
+            chamado.Fim = chamadoDTO.Fim;
+            chamado.Solucao = chamadoDTO.Solucao;
+
+            var _id = await chamadoService.UpdateAsync(id, chamado);
 
             return Ok(_id);
         }

@@ -5,7 +5,6 @@
         public string? Solucao { get; set; }
         public DateTime Inicio { get; set; }
         public DateTime? Fim { get; set; }
-        public int RequisitanteIncialId { get; set; }
         public string Assunto { get; set; }
     }
 

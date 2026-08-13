@@ -1,9 +1,11 @@
 ﻿using gerenciamento_Ti.DTO;
 using gerenciamento_Ti.Entities;
+using gerenciamento_Ti.Services.Implementation;
 using gerenciamento_Ti.Services.Interface;
 using gerenciamento_Ti.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace gerenciamento_Ti.Controllers
 {
@@ -13,9 +15,15 @@ namespace gerenciamento_Ti.Controllers
     public class MensagemChamadoController : ControllerBase
     {
         private readonly IMensagemChamadoService mensagemChamadoService;
-        public MensagemChamadoController(IMensagemChamadoService _mensagemChamadoService)
+        private readonly IUsuarioChamadoService usuarioChamadoService;
+        private readonly IChamadoService chamadoService;
+        public MensagemChamadoController(IMensagemChamadoService _mensagemChamadoService,
+                                         IUsuarioChamadoService _usuarioChamadoService,
+                                         IChamadoService _chamadoService)
         {
             mensagemChamadoService = _mensagemChamadoService;
+            usuarioChamadoService = _usuarioChamadoService;
+            chamadoService = _chamadoService;
         }
 
         [HttpGet("listagem")]
@@ -75,30 +83,51 @@ namespace gerenciamento_Ti.Controllers
         {
             if (mensagemChamadoDTO.ChamadoId == null)
                 return BadRequest();
-            else if (mensagemChamadoDTO.UsuarioChamadoId == null)
-                return BadRequest();
-            else if (mensagemChamadoDTO.ChamadoId == null)
+            //else if (mensagemChamadoDTO.UsuarioChamadoId == null)
+            //    return BadRequest();
+            else if (mensagemChamadoDTO.Texto == null)
                 return BadRequest();
 
-            var id = await mensagemChamadoService.CreateAsync(mensagemChamadoDTO);
+            //recuperando id do usuario chamado a partir do usuário da token
+            var usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var chamado = await chamadoService.GetById(mensagemChamadoDTO.ChamadoId);
+
+            if(chamado == null)
+                return NotFound("Chamado desta mensagem não encontrado.");
+
+            var usuarioChamado = chamado.UsuarioChamado
+                .FirstOrDefault(x => x.UsuarioId == int.Parse(usuarioId!));
+
+            if (usuarioChamado == null)
+                return NotFound("Usuário não está associado a este chamado.");
+
+            var usuarioChamadoId = usuarioChamado.Id;
+
+            //construindo MensagemChamado
+            var mensagemChamado = new MensagemChamado();
+            mensagemChamado.ChamadoId = mensagemChamadoDTO.ChamadoId;
+            mensagemChamado.UsuarioChamadoId = usuarioChamadoId;
+            mensagemChamado.Texto = mensagemChamadoDTO.Texto;
+
+            var id = await mensagemChamadoService.CreateAsync(mensagemChamado);
 
             return Ok(id);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromBody] MensagemChamadoDTO mensagemChamadoDTO, int id)
-        {
-            if (mensagemChamadoDTO.ChamadoId == null)
-                return BadRequest();
-            else if (mensagemChamadoDTO.UsuarioChamadoId == null)
-                return BadRequest();
-            else if (mensagemChamadoDTO.ChamadoId == null)
-                return BadRequest();
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Update([FromBody] MensagemChamadoDTO mensagemChamadoDTO, int id)
+        //{
+        //    if (mensagemChamadoDTO.ChamadoId == null)
+        //        return BadRequest();
+        //    else if (mensagemChamadoDTO.UsuarioChamadoId == null)
+        //        return BadRequest();
+        //    else if (mensagemChamadoDTO.ChamadoId == null)
+        //        return BadRequest();
 
-            var _id = await mensagemChamadoService.UpdateAsync(id, mensagemChamadoDTO);
+        //    var _id = await mensagemChamadoService.UpdateAsync(id, mensagemChamadoDTO);
 
-            return Ok(_id);
-        }
+        //    return Ok(_id);
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

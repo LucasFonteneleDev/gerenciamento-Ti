@@ -18,6 +18,7 @@ namespace gerenciamento_Ti.Services.Implementation
         {
             var Chamado = await context.Chamado.Where(x => x.Id == id)
                 .Include(x=> x.Usuario)
+                .Include(x=> x.UsuarioChamado)
                 .FirstOrDefaultAsync();
 
             if (Chamado == null)
@@ -35,38 +36,29 @@ namespace gerenciamento_Ti.Services.Implementation
                 .ToListAsync();
         }
 
-        public async Task<int> CreateAsync(ChamadoDTO ChamadoDTO)
+        public async Task<int> CreateAsync(Chamado chamado)
         {
-            var Chamado = new Chamado
-            {
-                Solucao = ChamadoDTO.Solucao,
-                Inicio = ChamadoDTO.Inicio,
-                Fim = ChamadoDTO.Fim,
-                UsuarioId = ChamadoDTO.RequisitanteIncialId,
-                Assunto = ChamadoDTO.Assunto
-            };
-
-            context.Chamado.Add(Chamado);
+            context.Chamado.Add(chamado);
             await context.SaveChangesAsync();
 
-            return Chamado.Id;
+            return chamado.Id;
         }
 
-        public async Task<int> UpdateAsync(int id, ChamadoDTO ChamadoDTO)
+        public async Task<int> UpdateAsync(int id, Chamado chamado)
         {
-            var Chamado = await GetById(id);
+            var _Chamado = await GetById(id);
 
-            if (Chamado == null)
+            if (_Chamado == null)
                 throw new Exception("Este chamado não foi encontrado.");
 
-            Chamado.Solucao = ChamadoDTO.Solucao;
-            Chamado.Inicio = ChamadoDTO.Inicio;
-            Chamado.Fim = ChamadoDTO.Fim;
-            Chamado.UsuarioId = ChamadoDTO.RequisitanteIncialId;
-            Chamado.Assunto = ChamadoDTO.Assunto;
+            _Chamado.Solucao = chamado.Solucao;
+            //_Chamado.Inicio = chamado.Inicio;
+            _Chamado.Fim = chamado.Fim;
+            //_Chamado.UsuarioId = chamado.UsuarioId;
+            _Chamado.Assunto = chamado.Assunto;
 
             await context.SaveChangesAsync();
-            return Chamado.Id;
+            return _Chamado.Id;
         }
 
         public async Task<bool> DeleteAsync(int id)
