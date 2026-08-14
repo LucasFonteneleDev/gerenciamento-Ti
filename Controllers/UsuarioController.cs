@@ -64,6 +64,8 @@ namespace gerenciamento_Ti.Controllers
                 return true;
             else if (string.IsNullOrEmpty(UsuarioDTO.Senha))
                 return true;
+            else if (UsuarioDTO.NivelAtendente == null)
+                return true;
 
             return false;
         }

@@ -5,6 +5,7 @@ using gerenciamento_Ti.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using gerenciamento_Ti.Enum;
 
 namespace gerenciamento_Ti.Controllers
 {
@@ -85,7 +86,7 @@ namespace gerenciamento_Ti.Controllers
             var usuarioChamado = new UsuarioChamadoDTO();
             usuarioChamado.ChamadoId = idchamado;
             usuarioChamado.UsuarioId = chamado.UsuarioId;
-            usuarioChamado.Tipo = Enum.TipoUsuarioChamado.Requisitante;
+            usuarioChamado.Tipo = EnumTipoUsuarioChamado.Requisitante;
 
             //não é necessário repassar a id de usuario_chamado pois será deduzido do token
             await usuarioChamadoService.CreateAsync(usuarioChamado);

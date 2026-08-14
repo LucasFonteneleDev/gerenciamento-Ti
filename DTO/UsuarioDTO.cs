@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using gerenciamento_Ti.Enum;
 
 namespace gerenciamento_Ti.DTO
 {
@@ -8,6 +9,9 @@ namespace gerenciamento_Ti.DTO
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
+
+        //todo: Temporário. Ainda não faz sentido criar um controle completo de níveis de atendimento;
+        public EnumNivelAtendente NivelAtendente { get; set; }
     }
 
     public class UsuarioDTOGet
@@ -16,5 +20,6 @@ namespace gerenciamento_Ti.DTO
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
+        public EnumNivelAtendente NivelAtendente { get; set; }
     }
 }

@@ -56,7 +56,8 @@ namespace gerenciamento_Ti.Services.Implementation
             {
                 Nome = UsuarioDTO.Nome,
                 Email = UsuarioDTO.Email,
-                SenhaHash = UsuarioDTO.Senha
+                SenhaHash = UsuarioDTO.Senha,
+                NivelAtendente = UsuarioDTO.NivelAtendente
             };
 
             context.Usuario.Add(Usuario);
@@ -75,6 +76,7 @@ namespace gerenciamento_Ti.Services.Implementation
             Usuario.Nome = UsuarioDTO.Nome;
             Usuario.Email = UsuarioDTO.Email;
             Usuario.SenhaHash = UsuarioDTO.Senha;
+            Usuario.NivelAtendente = UsuarioDTO.NivelAtendente;
 
             await context.SaveChangesAsync();
             return Usuario.Id;

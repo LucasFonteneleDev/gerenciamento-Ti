@@ -6,7 +6,7 @@ namespace gerenciamento_Ti.DTO
     {
         public int ChamadoId { get; set; }
         public int UsuarioId { get; set; }
-        public TipoUsuarioChamado Tipo { get; set; }
+        public EnumTipoUsuarioChamado Tipo { get; set; }
     }
 
     public class UsuarioChamadoDTOGet
@@ -14,6 +14,6 @@ namespace gerenciamento_Ti.DTO
         public int Id { get; set; }
         public int ChamadoId { get; set; }
         public int UsuarioId { get; set; }
-        public TipoUsuarioChamado Tipo { get; set; }
+        public EnumTipoUsuarioChamado Tipo { get; set; }
     }
 }

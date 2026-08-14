@@ -1,6 +1,6 @@
 ﻿namespace gerenciamento_Ti.Enum
 {
-    public enum TipoUsuarioChamado
+    public enum EnumTipoUsuarioChamado
     {
         Atendente = 0,
         Requisitante = 1,

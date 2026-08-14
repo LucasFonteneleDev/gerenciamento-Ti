@@ -12,6 +12,7 @@ namespace gerenciamento_Ti.Util
             usuarioGET.Id = usuario.Id;
             usuarioGET.Nome = usuario.Nome;
             usuarioGET.Email = usuario.Email;
+            usuarioGET.NivelAtendente = usuario.NivelAtendente;
 
             return usuarioGET;
         }
