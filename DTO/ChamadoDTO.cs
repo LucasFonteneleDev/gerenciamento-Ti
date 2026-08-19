@@ -2,10 +2,13 @@
 {
     public class ChamadoDTO
     {
-        public string? Solucao { get; set; }
-        public DateTime Inicio { get; set; }
-        public DateTime? Fim { get; set; }
         public string Assunto { get; set; }
+    }
+
+    public class ChamadoDTOPut
+    {
+        public string? Solucao { get; set; }
+        public DateTime? Fim { get; set; }
     }
 
     public class ChamadoDTOGet

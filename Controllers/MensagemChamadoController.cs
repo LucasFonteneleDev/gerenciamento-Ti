@@ -17,13 +17,16 @@ namespace gerenciamento_Ti.Controllers
         private readonly IMensagemChamadoService mensagemChamadoService;
         private readonly IUsuarioChamadoService usuarioChamadoService;
         private readonly IChamadoService chamadoService;
+        private readonly IUsuarioService usuarioService;
         public MensagemChamadoController(IMensagemChamadoService _mensagemChamadoService,
                                          IUsuarioChamadoService _usuarioChamadoService,
-                                         IChamadoService _chamadoService)
+                                         IChamadoService _chamadoService,
+                                         IUsuarioService _usuario)
         {
             mensagemChamadoService = _mensagemChamadoService;
             usuarioChamadoService = _usuarioChamadoService;
             chamadoService = _chamadoService;
+            usuarioService = _usuario;
         }
 
         [HttpGet("listagem")]
@@ -89,17 +92,37 @@ namespace gerenciamento_Ti.Controllers
                 return BadRequest();
 
             //recuperando id do usuario chamado a partir do usuário da token
-            var usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //todo:tratamento de id usuario nula
+            var usuarioId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var chamado = await chamadoService.GetById(mensagemChamadoDTO.ChamadoId);
 
             if(chamado == null)
                 return NotFound("Chamado desta mensagem não encontrado.");
 
             var usuarioChamado = chamado.UsuarioChamado
-                .FirstOrDefault(x => x.UsuarioId == int.Parse(usuarioId!));
+                .FirstOrDefault(x => x.UsuarioId == usuarioId!);
 
             if (usuarioChamado == null)
-                return NotFound("Usuário não está associado a este chamado.");
+            {
+                //return NotFound("Usuário não está associado a este chamado.");
+
+                var usuario = await usuarioService.GetById(usuarioId);
+                //todo: tratamento de usuário Null
+
+                if(usuario.NivelAtendente != Enum.EnumNivelAtendente.NaoAtende){
+                    var usuarioChamadoNovo = new UsuarioChamadoDTO
+                    {
+                        Tipo = Enum.EnumTipoUsuarioChamado.Atendente,
+                        ChamadoId = chamado.Id,
+                        UsuarioId = usuarioId
+                    };
+
+                    var idUsuarioChamado = await usuarioChamadoService.CreateAsync(usuarioChamadoNovo);
+
+                    usuarioChamado = await usuarioChamadoService.GetById(idUsuarioChamado);
+                }
+
+            }
 
             var usuarioChamadoId = usuarioChamado.Id;
 

@@ -65,15 +65,13 @@ namespace gerenciamento_Ti.Controllers
             //validação do chamado
             if (chamadoDTO == null)
                 return BadRequest();
-            else if (chamadoDTO.Inicio == null)
-                return BadRequest();
 
             //construindo objeto de CHAMADO
             var chamado = new Chamado();
             chamado.Assunto = chamadoDTO.Assunto;
-            chamado.Inicio = chamadoDTO.Inicio;
-            chamado.Fim = chamadoDTO.Fim;
-            chamado.Solucao = chamadoDTO.Solucao;
+            chamado.Inicio = DateTime.UtcNow;
+            //chamado.Fim = chamadoDTO.Fim;
+            //chamado.Solucao = chamadoDTO.Solucao;
 
             //recuperando id do usuário do token
             var usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -95,16 +93,15 @@ namespace gerenciamento_Ti.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromBody] ChamadoDTO chamadoDTO, int id)
+        public async Task<IActionResult> Update([FromBody] ChamadoDTOPut chamadoDTO, int id)
         {
             if (chamadoDTO == null)
                 return BadRequest();
-            else if (chamadoDTO.Inicio == null)
-                return BadRequest();
 
-            var chamado = new Chamado();
-            chamado.Assunto = chamadoDTO.Assunto;
-            chamado.Inicio = chamadoDTO.Inicio;
+            var chamado = await chamadoService.GetById(id);
+            if (chamado == null)
+                NotFound();
+
             chamado.Fim = chamadoDTO.Fim;
             chamado.Solucao = chamadoDTO.Solucao;
 
