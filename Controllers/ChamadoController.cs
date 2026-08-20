@@ -16,17 +16,26 @@ namespace gerenciamento_Ti.Controllers
     {
         private readonly IChamadoService chamadoService;
         private readonly IUsuarioChamadoService usuarioChamadoService;
+        private readonly IUsuarioService usuarioService;
         public ChamadoController(IChamadoService _chamadoService,
-                                 IUsuarioChamadoService _usuarioChamadoService)
+                                 IUsuarioChamadoService _usuarioChamadoService,
+                                 IUsuarioService _usuarioService)
         {
             chamadoService = _chamadoService;
             usuarioChamadoService = _usuarioChamadoService;
+            usuarioService = _usuarioService;
         }
 
         [HttpGet("listagem")]
         public async Task<IActionResult> GetList()
         {
-            var Chamados = await chamadoService.GetAllAsync();
+            var usuarioId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            //todo: interpretação do nível de atendente ainda pouco evoluida na regra de negócio
+            //será evoluida com a criação de nova forma de atribuição de cargo
+            var isAtendente = !User.IsInRole(Enum.EnumNivelAtendente.NaoAtende.ToString());
+
+            var Chamados = isAtendente ? await chamadoService.GetAllAsync():
+                                        await chamadoService.GetListByUserId(usuarioId);
 
             List<ChamadoDTOGet> chamadosDTOget = new List<ChamadoDTOGet>();
             foreach (var Chamado in Chamados)

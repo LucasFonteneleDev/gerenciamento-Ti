@@ -29,6 +29,16 @@ namespace gerenciamento_Ti.Services.Implementation
             return Chamado;
         }
 
+        public async Task<List<Chamado>> GetListByUserId(int id)
+        {
+            var Chamados = await context.Chamado.Where(x => x.UsuarioId == id)
+                .Include(x => x.Usuario)
+                //.Include(x => x.UsuarioChamado)
+                .ToListAsync();
+
+            return Chamados;
+        }
+
         public async Task<List<Chamado>> GetAllAsync()
         {
             return await context.Chamado

@@ -10,6 +10,13 @@ namespace gerenciamento_Ti.Util
         {
             var mensagemChamadosGET = new MensagemChamadoDTOGet();
 
+            //NOME DO USUÁRIO NA MENSAGEM
+            if (MensagemChamado.UsuarioChamado != null
+                && MensagemChamado.UsuarioChamado.Usuario != null)
+            {
+                mensagemChamadosGET.UsuarioChamadoNome = MensagemChamado.UsuarioChamado.Usuario.Nome;
+            }
+
             mensagemChamadosGET.Id = MensagemChamado.Id;
             mensagemChamadosGET.ChamadoId = MensagemChamado.ChamadoId;
             mensagemChamadosGET.UsuarioChamadoId = MensagemChamado.UsuarioChamadoId;

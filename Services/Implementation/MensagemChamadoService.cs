@@ -36,6 +36,8 @@ namespace gerenciamento_Ti.Services.Implementation
         public async Task<List<MensagemChamado>> GetAllFromChamadoAsync(int id_Chamado)
         {
             return await context.MensagemChamado
+                .Include(x => x.UsuarioChamado)
+                .Include(x => x.UsuarioChamado.Usuario)
                 .Where(x => x.ChamadoId == id_Chamado)
                 .ToListAsync();
         }
