@@ -44,6 +44,12 @@ var jwtKey = builder.Configuration["Jwt:Key"];
 var issuer = builder.Configuration["Jwt:Issuer"];
 var audience = builder.Configuration["Jwt:Audience"];
 
+
+if (string.IsNullOrEmpty(jwtKey))
+{
+    throw new Exception("Jwt:Key não foi encontrada!");
+}
+
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
